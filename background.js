@@ -1,1 +1,5 @@
-// Background script if needed for additional functionality
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.identity.getAuthToken({ interactive: true }, (token) => {
+    console.log('Token obtained:', token);
+  });
+});
