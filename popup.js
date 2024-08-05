@@ -1,34 +1,42 @@
 document.getElementById('submitBtn').addEventListener('click', async () => {
   const projectName = document.getElementById('projectName').value;
   const communicationPartner = document.getElementById('communicationPartner').value;
-  const type = document.getElementById('type').value;
-  const info = document.getElementById('info').value;
-  // Gather all other fields similarly
+  // Add other fields similarly
 
-  const data = {
-    projectName,
-    communicationPartner,
-    type,
-    info,
-    // Add all other fields here
-  };
-
+  const token = await getAccessToken();
+  
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwjjaXozaO6XIeuba3a2RBzON2A1a84E-f6t6DHiIDJSvD2FwTttHdFIZ6Soc1w8n6k/exec', { // Replace with your web app URL
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/YOUR_SPREADSHEET_ID/values/Sheet1!A1:append?valueInputOption=RAW`, {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        values: [[projectName, communicationPartner]] // Add other fields here
+      })
     });
     const result = await response.json();
-    if (result.status === 'success') {
+    if (response.ok) {
       alert('Project saved successfully!');
     } else {
       alert('Failed to save project.');
+      console.error(result);
     }
   } catch (error) {
     console.error('Error:', error);
     alert('Error saving project.');
   }
 });
+
+async function getAccessToken() {
+  return new Promise((resolve, reject) => {
+    chrome.identity.getAuthToken({ interactive: true }, (token) => {
+      if (chrome.runtime.lastError || !token) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(token);
+      }
+    });
+  });
+}
