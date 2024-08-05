@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Project Tracker",
+  "name": "Simple Project Tracker",
   "version": "1.0",
-  "description": "A Chrome extension to track projects and save data to Google Sheets.",
+  "description": "A Chrome extension to save data to Google Sheets.",
   "permissions": [
     "storage",
-    "activeTab",
-    "scripting"
+    "identity"
   ],
   "action": {
     "default_popup": "popup.html"
