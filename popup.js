@@ -14,7 +14,7 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
   };
 
   try {
-    const response = await fetch('YOUR_WEB_APP_URL_HERE', { // Replace with your web app URL
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwjjaXozaO6XIeuba3a2RBzON2A1a84E-f6t6DHiIDJSvD2FwTttHdFIZ6Soc1w8n6k/exec', { // Replace with your web app URL
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
